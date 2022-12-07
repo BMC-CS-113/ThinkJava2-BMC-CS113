@@ -112,6 +112,13 @@ comfortable using Vim.
 
 Run ``vimtutor`` from the command-line to go through the 30 minute tutorial.
 
+\label{subsec:navgCMNDLINE}
+\subsection{Navigating the Command-line}
+\change{Add subsection on navigating the command line/terminal}
+
+\subsection{More common command-line tools}
+\label{subsec:cmndLine}
+\change{Add subsection on common command line/terminal commands}
 
 \section{The Hello World Program}
 \label{hello}
@@ -196,7 +203,7 @@ Later, you will see programs that define more than one method.
 \index{class}
 
 This program defines a class named \java{Hello}.
-For now, a {\bf class} is a collection of methods; we'll have more to say about this later.
+For now, a {\bf class} is a collection of methods in a single Java file; we'll have more to say about this later.
 You can give a class any name you like, but it is conventional to start with a capital letter.
 The name of the class has to match the name of the file it is in, so this class has to be in a file named {\it Hello.java}.
 
@@ -301,10 +308,7 @@ If there are no errors, the compiler saves the byte code in the file {\it Hello.
 To run the program, the programmer uses {\tt java} to interpret the byte code.
 The result of the program is then displayed on the screen.
 
-Although it might seem complicated, these steps are automated for you in most development environments.
-Usually, you only have to press a button or type a single command to compile and interpret your program.
-On the other hand, it is important to know what steps are happening in the background, so if something goes wrong you can figure out what it is.
-
+\change{Give example of terminal commands using javac and then java}
 
 \section{Displaying Two Messages}
 
@@ -378,6 +382,9 @@ publicclassGoodbye{
 }
 \end{code}
 
+Copy the code above into a file called {\it Goodbye.java} and compile the file 
+using the command {\it javac Goodby.java}. What error messages do you see?
+
 But most other spaces are optional.
 For example, this program {\em is} legal:
 
@@ -403,8 +410,7 @@ It still works, but the program is getting harder and harder to read.
 Newlines and spaces are important for visually organizing your program, making it easier to understand the program and find errors when they occur.
 
 Many editors will automatically format source code with consistent indenting and line breaks.
-For example, in DrJava (see Appendix~\ref{drjava}) you can indent your code by selecting all text ({\sf Ctrl+A}) and pressing the {\sf Tab} key.
-
+\change{describe how to create a .vimrc file to set default spacing}
 
 %\section{Style Guidelines}
 
@@ -431,6 +437,9 @@ But you might want to refer to them periodically as you read this book.
 %One of the most popular is Checkstyle, which enforces most of Google's guidelines.
 %Instructions for downloading and running Checkstyle are in Appendix~\ref{checkstyle}.
 
+Later in the semester we will discuss how to run a command to check that your 
+java files obey some guidelines. Future assignments will require that your java files
+obey guidelines.
 
 \section{Using Escape Sequences}
 
@@ -518,7 +527,7 @@ As you learn to develop algorithms for problems you haven't solved before, you w
 \index{debugging}
 
 Designing algorithms and writing code is difficult and error-prone.
-For historical reasons, programming errors are called {\bf bugs}, and the process of tracking them down and correcting them is called {\bf debugging}.
+For historical reasons, programming errors are called {\bf bugs}, and the process of tracking them down and correcting them is called {\bf debugging}.\footnote{The story goes that Grace Hopper traced down an error to a moth stuck inside a part of a computer (\url{https://ei.cs.vt.edu/~history/Hopper.Danis.html}).}
 As you learn to debug your programs, you will develop new problem-solving skills.
 You will need to think creatively when unexpected errors happen.
 
@@ -532,8 +541,8 @@ Thinking about how to correct programs and improve their performance sometimes e
 \label{sec:examples}
 
 It is a good idea to read this book in front of a computer so you can try out the examples as you go.
-You can run many of the examples directly in DrJava's Interactions pane (see Appendix~\ref{interactions}).
-But if you put the code in a source file, it will be easier to try out variations.
+Put the code in a source file (i.e. a java) file, compile and run the code, and see what happens.
+Also, try making changes to the code and see what happens.
 
 \index{error!message}
 
@@ -554,6 +563,8 @@ It is better to make mistakes now and on purpose than later on and accidentally.
 Debugging is like an experimental science: once you have an idea about what is going wrong, you modify your program and try again.
 If your hypothesis was correct, then you can predict the result of the modification, and you take a step closer to a working program.
 If your hypothesis was wrong, you have to come up with a new one.
+
+Just like in science, there is no shame in your hypothesis being wrong. Testing incorrect hypothesis is beneficial in the long run. If all of your hypotheses were always correct, then you'd be teaching this course!
 %As Sherlock Holmes pointed out, ``When you have eliminated the impossible, whatever remains, however improbable, must be the truth.''
 %(A.~Conan Doyle, {\it The Sign of Four}.)
 
@@ -693,14 +704,10 @@ At the end of each chapter, we include exercises you can do with the things you'
 We encourage you to at least attempt every problem.
 You can't learn to program only by reading about it; you have to practice.
 
-Before you can compile and run Java programs, you might have to download and install a few tools.
-There are many good options, but we recommend DrJava, which is an ``integrated development environment'' (IDE) well suited for beginners.
-Instructions for getting started are in Appendix~\ref{tools}.
-
 The code for this chapter is in the {\it ch01} directory of {\it ThinkJavaCode2}.
 See page~\pageref{code} for instructions on how to download the repository.
 Before you start the exercises, we recommend that you compile and run the examples.
-
+\change{look into this code released for the book}
 
 \begin{exercise}  %%V6 Ex1.1
 
