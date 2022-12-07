@@ -69,11 +69,21 @@ This example declares two variables with type \java{String} and two with type \j
 The last line shows how to declare multiple variables with the same type: \java{hour} and \java{minute} are both integers.
 Note that each declaration statement ends with a semicolon (\java{;}).
 
+Put the following lines in a java file and try to compile the file. What error messages
+does the compiler tell you about?
+
+\begin{code}
+string firstName;
+String lastName
+Int hour, minute;
+\end{code}
+
 \index{case-sensitive}
 
 Variable names usually begin with a lowercase letter, in contrast to class names (like \java{Hello}) that start with a capital letter.
-When a variable name contains more than one word (like \java{firstName}), it is conventional to capitalize the first letter of each subsequent word.
+When a variable name contains more than one word (like \java{firstName}), it is conventional to capitalize the first letter of each subsequent word. We refer to this as camel case.\footnote{If it isn't clear why we call this camelCase, think of sally the camel \url{https://www.youtube.com/watch?v=2b1sHZXL1ac}}.
 Variable names are case-sensitive, so \java{firstName} is not the same as \java{firstname} or \java{FirstName}.
+
 
 \index{keyword}
 
@@ -82,7 +92,7 @@ But there are about 50 reserved words, called {\bf keywords}, that you are not a
 These words include \java{public}, \java{class}, \java{static}, \java{void}, and \java{int}, which are used by the compiler to analyze the structure of the program.
 
 You can see the full list of keywords (\url{https://thinkjava.org/keywords}), but you don't have to memorize them.
-Most programming editors provide ``syntax highlighting'', which makes different parts of the program appear in different colors.
+Most programming editors (including vim) provide ``syntax highlighting'', which makes different parts of the program appear in different colors.
 And the compiler will complain even if one does sneak past you and your editor.
 
 %For example, keywords are often blue, strings red, comments green, and other code black.
@@ -392,6 +402,8 @@ The following is illegal because the variable on the left is an \java{int} and t
 \begin{code}
 int x = 1.1;  // compiler error
 \end{code}
+\\Copy this previous example to a java file and compile the file. What is the
+error message that you see?
 
 \index{automatic conversion}
 
@@ -496,7 +508,7 @@ This solution works as long as the number of cents doesn't exceed the largest \j
 \index{operator!string}
 
 In general, you cannot perform mathematical operations on strings, even if the strings look like numbers.
-The following expressions are illegal:
+The following expressions are illegal:\footnote{Copy these expressions to a file and compile the file. What are the error messages that you see?}
 
 \begin{code}
 "Hello" - 1     "World" / 123     "Hello" * "World"
@@ -599,7 +611,7 @@ File: Hello.java  [line: 5]
 Error: ';' expected
 \end{stdout}
 
-That's pretty good: the location of the error is correct, and the error message tells you what's wrong.
+That's pretty good: the location of the error (line 5) is correct, and the error message tells you what's wrong.
 But error messages are not always easy to understand.
 Sometimes the compiler reports the place in the program where the error was {\em detected}, not where it actually occurred.
 And sometimes the description of the problem is more confusing than helpful.
