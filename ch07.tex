@@ -717,6 +717,45 @@ public class Doubloon {
 This example uses methods, \java{if} statements, \java{for} loops, arithmetic and logical operators, integers, characters, strings, booleans, and arrays.
 We hope you'll take a second to appreciate how much you've learned!
 
+\section{Recursion Revisited}
+\change{add this example from the original recursion chapter}
+The second problem is available at \url{https://codingbat.com/prob/p135988}:
+
+\begin{quote}
+\textbf{Recursion-1 ~array11}
+
+Given an array of ints, compute recursively the number of times that the value 11 appears in the array.
+
+\ttfamily
+array11([1, 2, 11], 0) $\rightarrow$ 1 \\
+array11([11, 11], 0) $\rightarrow$ 2 \\
+array11([1, 2, 3, 4], 0) $\rightarrow$ 0
+\end{quote}
+
+This problem uses the convention of passing the index as an argument.
+So the base case is when we've reached the end of the array.
+At that point, we know there are no more {\tt 11}s:
+
+\begin{code}
+if (index >= nums.length) {
+    return 0;
+}
+\end{code}
+
+Next we look at the current number (based on the given index), and check if it's an {\tt 11}.
+After that, we can recursively check the rest of the array.
+Similar to the \java{noX} problem, we look at only one integer per method call:
+
+\begin{code}
+int recurse = array11(nums, index + 1);
+if (nums[index] == 11) {
+    return recurse + 1;
+} else {
+    return recurse;
+}
+\end{code}
+
+Again, you can run this solution on CodingBat by pasting the snippets into the method definition.
 
 \section{Vocabulary}
 
