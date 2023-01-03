@@ -1,4 +1,4 @@
-\documentclass[12pt]{book}
+\documentclass[12pt,pdftex,dvipsnames,prependcaption,textsize=tiny]{book}
 
 \title{Think Java - BMC CS 113}
 \author{Adam Poliak (heavily adopted from Allen B. Downey and Chris Mayfield)}
@@ -83,15 +83,23 @@
 
 \fi
 
-\usepackage{xargs}                      % Use more than one optional parameter in a new commands
-\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+
+
+\usepackage[prependcaption,textsize=tiny]{todonotes}
+\newcommand{\change}[2][]{\todo[color=yellow,size=\scriptsize,fancyline,caption={},#1]{#2}} % to mark stuff that you know is missing or wrong when you write the text
+
+\newcommand{\dataName}[0]{$\hat{p}RTE$\xspace}
+\newcommand{\verbose}[1]{}
+%\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+%\usepackage[colorinlistoftodos,
+\usepackage[prependcaption,textsize=tiny]{todonotes}
+%\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
 % 
-\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
-\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
-\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
-\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
-\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
-\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+%\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+%\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+%\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+%\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+%\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 
 
 %%%% END OF PREAMBLE
@@ -238,11 +246,13 @@ Permission is granted to copy, distribute, and/or modify this work under the ter
 
 \input{ch05.tex}
 
+\input{chRecursion.tex}
+
 \input{ch06.tex}
 
 \input{ch07.tex}
 
-\input{ch08.tex}
+%\input{ch08.tex} % this was recursion
 
 %~ \part{Object-Oriented Programming}
 
