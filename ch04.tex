@@ -39,7 +39,7 @@ public static void main(String[] args) {
 \index{void}
 \index{type!void}
 
-In this example, the \java{newLine} and \java{main} methods are both \java{public}, which means they can be {\bf invoked} (or ``called'') from other classes.
+In this example, the \java{newLine} and \java{main} methods are both \java{public}, which means they can be {\bf invoked} (or ``called'') from other classes (or even the command line for the case of \java{main}).
 %They are both \java{static}, but we won't yet explain what that means.
 And they are both \java{void}, which means that they don't return a result (in contrast to \java{nextDouble}).
 The output of the program is shown here:
@@ -104,7 +104,7 @@ When you look at a class definition that contains several methods, it is temptin
 But that is {\em not} the {\bf flow of execution}, or the order the program actually runs.
 The \java{NewLine} program runs methods in the opposite order than they are listed.
 
-Programs always begin at the first statement of \java{main}, regardless of where it is in the source file.
+Programs always begin at the first statement of \java{main}, regardless of where it is in the source file.\footnote{Though by convention we put the \java{main} method as the last method in our source file.}
 Statements are executed one at a time, in order, until you reach a method invocation, which you can think of as a detour.
 Instead of going to the next statement, you jump to the first line of the invoked method, execute all the statements there, and then come back and pick up exactly where you left off.
 
