@@ -1,0 +1,618 @@
+\chapter{Objects: Strings} 
+\label{object:Strings}
+
+\index{object-oriented}
+
+Java is an {\bf object-oriented} language, which means that it uses objects to (1)~represent data and (2)~provide methods related to them.
+This way of organizing programs is a powerful design concept, and we will introduce it gradually throughout the remainder of the book.
+
+\index{object}
+\index{System.in}
+\index{System.out}
+
+An {\bf object} is a collection of data that provides a set of methods.
+For example, \java{Scanner}, which you saw in Section~\ref{scanner}, is an object that provides methods for parsing input.
+\java{System.out} and \java{System.in} are also objects.
+
+Strings are objects, too.
+They contain characters and provide methods for manipulating character data.
+Other data types, like \java{Integer}, contain numbers and provide methods for manipulating number data.
+We will explore some of these methods in this chapter.
+
+
+\section{Primitives vs Objects}
+
+\index{primitive}
+
+Not everything in Java is an object: \java{int}, \java{double}, \java{char}, and \java{boolean} are {\bf primitive} types.
+%We will explain some of the differences between object types and primitive types as we go along.
+When you declare a variable with a primitive type, Java reserves a small amount of memory to store its value.
+Figure~\ref{fig.mem1} shows how the following values are stored in memory:
+
+\begin{code}
+int number = -2;
+char symbol = '!';
+\end{code}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{figs/mem1.pdf}
+\caption{Memory diagram of two primitive variables.}
+\label{fig.mem1}
+\end{center}
+\end{figure}
+
+\index{memory diagram}
+\index{diagram!memory}
+
+
+Objects work in a similar way.
+For example, this line declares a \java{String} variable named \java{word} and creates a \java{String} object, as shown in Figure~\ref{fig.mem3}:
+
+\begin{code}
+String word = "dog";
+\end{code}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{figs/mem3.pdf}
+\caption{Memory diagram of a \java{String} object.}
+\label{fig.mem3}
+\end{center}
+\end{figure}
+
+Objects and arrays are usually created with the \java{new} keyword, which allocates memory for them. %(see Section~\ref{allocate})
+For convenience, you don't have to use \java{new} to create strings:
+
+\begin{code}
+String word1 = new String("dog");  // creates a string object
+String word2 = "dog";   // implicitly creates a string object
+\end{code}
+
+\index{string!comparing}
+
+Recall from Section~\ref{strcmp} that you need to use the \java{equals} method to compare strings.
+The \java{equals} method traverses the \java{String} objects and tests whether they contain the same characters.
+
+To test whether two integers or other primitive types are equal, you can simply use the \java{==} operator.
+But two \java{String} objects with the same characters would not be considered equal in the \java{==} sense.
+The \java{==} operator, when applied to string variables, tests only whether they refer to the {\em same} object.
+
+As mentioned above, Strings contain characters, and since they are objects, they have methods for manipulating
+character data. The rest of the chapter will cover some String methods.
+
+\section{Characters}
+Some of the most interesting problems in computer science involve searching and manipulating text.
+\index{charAt}
+\index{char}
+\index{type!char}
+Strings provide a method named \java{charAt}.
+It returns a \java{char}, a data type that stores an individual character (as opposed to strings of them):
+
+
+\begin{code}
+String fruit = "banana";
+char letter = fruit.charAt(0);
+\end{code}
+
+The argument \java{0} means that we want the character at {\bf index} 0.
+String indexes range from 0 to $n-1$, where $n$ is the length of the string.
+So the character assigned to \java{letter} is \java{'b'}:
+
+\begin{center}
+\ttfamily
+\begin{tabular}{cccccc}
+\hline
+\multicolumn{1}{|l|}{b} & \multicolumn{1}{l|}{a} & \multicolumn{1}{l|}{n} & \multicolumn{1}{l|}{a} & \multicolumn{1}{l|}{n} & \multicolumn{1}{l|}{a} \\ \hline
+0                       & 1                      & 2                      & 3                      & 4                      & 5
+\end{tabular}
+\end{center}
+
+Characters work like the other data types you have seen.
+You can compare them using relational operators:
+
+\begin{code}
+if (letter == 'A') {
+    System.out.println("It's an A!");
+}
+\end{code}
+
+\index{quote mark}
+\index{escape sequence}
+
+Character literals, like \java{'A'}, appear in single quotes.
+Unlike string literals, which appear in double quotes, character literals can contain only a single character.
+Escape sequences, like \java{'\\t'}, are legal because they represent a single character.
+
+Underneath the hood, characters have numerical values.
+So if we called \java{incrementLetter('A')},
+based on the following recursive method, 
+the letters of the alphabet will be displayed:
+
+\begin{code}
+public static void incrementLetter(char c) {
+    if (c > 'Z') {
+      return;
+    }
+    System.out.print(c);
+    incrementLetter(c+1);
+}
+\end{code}
+
+The output is shown here:
+
+\begin{stdout}
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+\end{stdout}
+
+\index{Unicode}
+
+Java uses {\bf Unicode} to represent characters, so strings can store text in other alphabets like Cyrillic and Greek, and non-alphabetic languages like Chinese.
+You can read more about it at the Unicode website (\url{https://unicode.org/}).
+
+In Unicode, each character is represented by a ``code point'', which you can think of as an integer.
+The code points for uppercase Greek letters run from 913 to 937, so we can display the Greek alphabet like this:
+
+\begin{code}
+public static void printGreek(int i) {
+    if (i >= 938) {
+      return;
+    }
+    System.out.print((char) i);
+    printGreek(i+1);
+}
+
+System.out.print("Greek alphabet: ");
+printGreek(913);
+\end{code}
+
+This example uses a type cast to convert each integer (in the range) to the corresponding character.
+Try running the code and see what happens.
+
+
+\section{String Iteration}
+
+\index{iteration}
+
+Strings provide a method called \java{length} that returns the number of characters in the string.
+The following method displays the characters in \java{fruit}, one on each line:
+
+\begin{code}
+public static void displayLetters(String fruit, int index) {
+    if (index == fruit.length()) {
+        return;
+    }
+    char letter = fruit.charAt(index);
+    System.out.println(letter);
+    displayLetters(fruit, index+1);
+}
+
+public static void displayLetters(String fruit) {
+    displayLetters(fruit, 0);
+}
+
+displayLetters("orange");
+\end{code}
+
+\index{string!length}
+\index{length!string}
+
+Because \java{length} is a method, you have to invoke it with parentheses (there are no arguments).
+When \java{i} is equal to the length of the string, the condition becomes \java{false} and 
+the recursive method displayLetters stops calling itself.
+
+To find the last letter of a string, you might be tempted to do something like the following:
+
+\begin{code}
+int length = fruit.length();
+char last = fruit.charAt(length);      // wrong!
+\end{code}
+
+\index{StringIndexOutOfBoundsException}
+\index{exception!StringIndexOutOfBounds}
+
+This code compiles and runs, but invoking the \java{charAt} method throws a \java{StringIndexOutOfBoundsException}.
+The problem is that there is no sixth letter in \java{"banana"}.
+Since we started counting at 0, the six letters are indexed from 0 to 5.
+To get the last character, you have to subtract 1 from \java{length}:
+
+\begin{code}
+int length = fruit.length();
+char last = fruit.charAt(length - 1);  // correct
+\end{code}
+
+Many string algorithms involve reading one string and building another.
+For example, to reverse a string, we can concatenate one character at a time:
+
+\begin{code}
+public static String reverse(String s, int index) {
+    if (index < 0) {
+      return "";
+    }
+    return s.charAt(index) + reverse(s, index-1);
+}
+
+public static String reverse(String s) {
+    return reverse(s, s.length() - 1);
+}
+\end{code}
+
+\index{empty string}
+
+The initial value of \java{r} is \java{""}, which is an {\bf empty string}.
+The loop iterates the indexes of \java{s} in reverse order.
+Each time through the loop, the \java{+=} operator appends the next character to \java{r}.
+When the loop exits, \java{r} contains the characters from \java{s} in reverse order.
+So the result of \java{reverse("banana")} is \java{"ananab"}.
+
+
+\section{The indexOf Method}
+
+\index{indexOf}
+
+To search for a specific character in a string, you could write a recursive method and use \java{charAt} as in the previous section.
+However, the \java{String} class already provides a method for doing just that:
+
+\begin{code}
+String fruit = "banana";
+int index = fruit.indexOf('a');     // returns 1
+\end{code}
+
+This example finds the index of \java{'a'} in the string.
+But the letter appears three times, so it's not obvious what \java{indexOf} might do.
+According to the documentation, it returns the index of the {\em first} appearance.
+
+To find subsequent appearances, you can use another version of \java{indexOf}, which takes a second argument that indicates where in the string to start looking:
+
+\begin{code}
+int index = fruit.indexOf('a', 2);  // returns 3
+\end{code}
+
+To visualize how \java{indexOf} and other \java{String} methods work, it helps to draw a picture like Figure~\ref{fig.banana}.
+The previous code starts at index 2 (the first \java{'n'}) and finds the next \java{'a'}, which is at index 3.
+
+\index{memory diagram}
+\index{diagram!memory}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics{figs/banana.pdf}
+\caption{Memory diagram for a \java{String} of six characters.}
+\label{fig.banana}
+\end{center}
+\end{figure}
+
+%\begin{center}
+%\begin{tabular}{c|c|c|c|c|c}
+%%\hline
+%b & a & n & a & n & a \\
+%\hline
+%0 & 1 & 2 & 3 & 4 & 5 \\
+%%\hline
+%\end{tabular}
+%\end{center}
+
+If the character happens to appear at the starting index, the starting index is the answer.
+So \java{fruit.indexOf('a', 5)} returns \java{5}.
+If the character does not appear in the string, \java{indexOf} returns \java{-1}.
+Since indexes cannot be negative, this value indicates the character was not found.
+
+You can also use \java{indexOf} to search for an entire string, not just a single character.
+For example, the expression \java{fruit.indexOf("nan")} returns \java{2}.
+
+
+\section{Substrings}
+
+\index{substring}
+
+In addition to searching strings, we often need to extract parts of strings.
+The \java{substring} method returns a new string that copies letters from an existing string, given a pair of indexes:
+
+\begin{itemize}
+\item \java{fruit.substring(0, 3)} returns \java{"ban"}
+\item \java{fruit.substring(2, 5)} returns \java{"nan"}
+\item \java{fruit.substring(6, 6)} returns \java{""}
+\end{itemize}
+
+Notice that the character indicated by the second index is {\em not} included.
+Defining \java{substring} this way simplifies some common operations.
+For example, to select a substring with length \java{len}, starting at index \java{i}, you could write \java{fruit.substring(i, i + len)}.
+%So \java{fruit.substring(2, 2 + 3)} returns \java{"nan"}.
+
+\index{overloaded}
+
+Like most string methods, \java{substring} is {\bf overloaded}.
+That is, there are other versions of \java{substring} that have different parameters.
+If it's invoked with one argument, it returns the letters from that index to the end:
+
+\begin{itemize}
+\item \java{fruit.substring(0)} returns \java{"banana"}
+\item \java{fruit.substring(2)} returns \java{"nana"}
+\item \java{fruit.substring(6)} returns \java{""}
+\end{itemize}
+
+The first example returns a copy of the entire string.
+The second example returns all but the first two characters.
+As the last example shows, \java{substring} returns the empty string if the argument is the length of the string.
+
+We could also use \java{fruit.substring(2, fruit.length())} to get the result \java{"nana"}.
+But calling \java{substring} with one argument is more convenient when you want the end of the string.
+
+
+\section{String Comparison}
+\label{strcmp}
+
+\index{equals}
+\index{string!comparing}
+
+When comparing strings, it might be tempting to use the \java{==} and \java{!=} operators.
+But that will almost never work.
+The following code compiles and runs, but it always displays {\tt Goodbye!}\ regardless what the user types.
+
+\begin{code}
+System.out.print("Play again? ");
+String answer = in.nextLine();
+if (answer == "yes") {                 // wrong!
+    System.out.println("Let's go!");
+} else {
+    System.out.println("Goodbye!");
+}
+\end{code}
+
+The problem is that the \java{==} operator checks whether the two operands refer to the {\em same object}.
+Even if the answer is \java{"yes"}, it will refer to a different object in memory than the literal string \java{"yes"} in the code.
+You'll learn more about objects and references in the next chapter.
+
+The correct way to compare strings is with the \java{equals} method, like this:
+
+\begin{code}
+if (answer.equals("yes")) {
+    System.out.println("Let's go!");
+}
+\end{code}
+
+This example invokes \java{equals} on \java{answer} and passes \java{"yes"} as an argument.
+The \java{equals} method returns \java{true} if the strings contain the same characters; otherwise, it returns \java{false}.
+
+\index{compareTo}
+
+If two strings differ, we can use \java{compareTo} to see which comes first in alphabetical order:
+
+\begin{code}
+String name1 = "Alan Turing";
+String name2 = "Ada Lovelace";
+int diff = name1.compareTo(name2);
+if (diff < 0) {
+    System.out.println("name1 comes before name2.");
+} else if (diff > 0) {
+    System.out.println("name2 comes before name1.");
+} else {
+    System.out.println("The names are the same.");
+}
+\end{code}
+
+The return value from \java{compareTo} is the difference between the first characters in the strings that are not the same.
+In the preceding code, \java{compareTo} returns positive \java{8}, because the second letter of \java{"Ada"} comes before the second letter of \java{"Alan"} by eight letters.
+
+If the first string (the one on which the method is invoked) comes earlier in the alphabet, the difference is negative.
+If it comes later in the alphabet, the difference is positive.
+If the strings are equal, their difference is zero.
+
+\index{case-sensitive}
+
+Both \java{equals} and \java{compareTo} are case-sensitive.
+In Unicode, uppercase letters come before lowercase letters.
+So \java{"Ada"} comes before \java{"ada"}.
+
+
+\section{String Formatting}
+
+\index{printf}
+
+In Section~\ref{printf}, we learned how to use \java{System.out.printf} to display formatted output.
+Sometimes programs need to create strings that are formatted a certain way, but not display them immediately (or ever).
+For example, the following method returns a time string in 12-hour format:
+
+\begin{code}
+public static String timeString(int hour, int minute) {
+    String ampm;
+    if (hour < 12) {
+        ampm = "AM";
+        if (hour == 0) {
+            hour = 12;  // midnight
+        }
+    } else {
+        ampm = "PM";
+        hour = hour - 12;
+    }
+    return String.format("%02d:%02d %s", hour, minute, ampm);
+}
+\end{code}
+
+\index{string!format}
+
+\java{String.format} takes the same arguments as \java{System.out.printf}: a format specifier followed by a sequence of values.
+The main difference is that \java{System.out.printf} {\em displays} the result on the screen.
+\java{String.format} creates a new string but does not display anything.
+
+In this example, the format specifier \java{\%02d} means ``two-digit integer padded with zeros'', so \java{timeString(19, 5)} returns the string \java{"07:05 PM"}.
+As an exercise, try writing two nested \java{for} loops (in \java{main}) that invoke \java{timeString} and display all possible times over a 24-hour period.
+
+Be sure to skim through the documentation for \java{String}.
+Knowing what other methods are there will help you avoid reinventing the wheel.
+The easiest way to find documentation for Java classes is to do a web search for ``Java'' and the name of the class.
+
+
+\section{Vocabulary}
+
+\begin{description}
+
+\term{increment}
+Increase the value of a variable.
+
+\term{decrement}
+Decrease the value of a variable.
+
+\term{index}
+An integer variable or value used to indicate a character in a string.
+
+\term{Unicode}
+An international standard for representing characters in most of the world's languages.
+
+\term{empty string}
+The string \java{""}, which contains no characters and has a length of zero.
+
+\term{overloaded}
+Two or more methods with the same name but different parameters.
+
+\end{description}
+
+
+\section{Exercises}
+
+The code for this chapter is in the {\it ch06} directory of {\it ThinkJavaCode2}.
+See page~\pageref{code} for instructions on how to download the repository.
+Before you start the exercises, we recommend that you compile and run the examples.
+
+If you have not already read Appendix~\ref{debugger}, now might be a good time.
+It describes the DrJava debugger, which is a useful tool for visualizing the flow of execution through loops.
+
+
+\begin{exercise}  %%V6 Ex7.1
+
+Consider the following methods (\java{main} and \java{loop}):
+
+\begin{enumerate}
+
+\item Draw a table that shows the value of the variables \java{i} and \java{n} during the execution of \java{loop}.
+The table should contain one column for each variable and one line for each iteration.
+
+\item What is the output of this program?
+
+\item Can you prove that this loop terminates for any positive value of \java{n}?
+
+% If i is odd and we increment by 1, the result is even.  So the second
+% branch is always followed by the first branch.
+% If i is even and we divide by 2, the result might be odd.  So in the
+% worst case, we might alternate between the branches.
+% But we can't do more of the second branch than the first.
+% So we divide at least as often as we add.
+
+% If i is 1, we're done.
+% If i is 2, we divide by 2 and we're done.
+% If i is greater than 2, the first branch decreases more than the
+% second branch increases.
+% So if we do one of each, the net effect is a decrease.
+% Therefore, the value of i has to decrease after any two steps.
+
+\end{enumerate}
+
+\begin{code}
+public static void main(String[] args) {
+    loop(10);
+}
+
+public static void loop(int n) {
+    int i = n;
+    while (i > 1) {
+        System.out.println(i);
+        if (i % 2 == 0) {
+            i = i / 2;
+        } else {
+            i = i + 1;
+        }
+    }
+}
+\end{code}
+
+\end{exercise}
+
+
+\begin{exercise}  %%V6 Ex7.2
+
+Let's say you are given a number, $a$, and you want to find its square root.
+One way to do that is to start with a rough guess about the answer, $x_0$, and then improve the guess by using this formula:
+%
+\[ x_1 =(x_0 + a/x_0) / 2 \]
+%
+For example, if we want to find the square root of 9, and we start with $x_0 = 6$, then $x_1 = (6 + 9/6) / 2 = 3.75$, which is closer.
+We can repeat the procedure, using $x_1$ to calculate $x_2$, and so on.
+In this case, $x_2 = 3.075$ and $x_3 = 3.00091$.
+So the repetition converges quickly on the correct answer.
+
+Write a method called \java{squareRoot} that takes a \java{double} and returns an approximation of the square root of the parameter, using this technique.
+You should not use \java{Math.sqrt}.
+
+As your initial guess, you should use $a/2$.
+Your method should iterate until it gets two consecutive estimates that differ by less than 0.0001.
+%In other words, return when the absolute value of $x_n - x_{n-1}$ is less than 0.0001.
+You can use \java{Math.abs} to calculate the absolute value of the difference.
+
+\end{exercise}
+
+
+\begin{exercise}  %%V6 Ex7.6
+
+One way to evaluate $\exp(-x^2)$ is to use the infinite series expansion:
+%
+\[ \exp(-x^2) = 1 - x^2 + x^4/2 - x^6/6 + \ldots \]
+%
+The $i$th term in this series is $(-1)^i x^{2i} / i!$.
+Write a method named \java{gauss} that takes \java{x} and \java{n} as arguments and returns the sum of the first \java{n} terms of the series.
+You should not use \java{factorial} or \java{pow}.
+
+\end{exercise}
+
+
+\begin{exercise}  %%V6 Ex9.5
+
+\index{abecedarian}
+
+A word is said to be ``abecedarian'' if the letters in the word appear in alphabetical order.
+For example, the following are all six-letter English abecedarian words:
+
+\begin{quote}
+abdest, acknow, acorsy, adempt, adipsy, agnosy, befist, behint, %\\
+beknow, bijoux, biopsy, cestuy, chintz, deflux, dehors, dehort, %\\
+deinos, diluvy, dimpsy %\\
+\end{quote}
+
+Write a method called \java{isAbecedarian} that takes a \java{String} and returns a \java{boolean} indicating whether the word is abecedarian.
+%Your method can be iterative or recursive.
+
+\end{exercise}
+
+
+\begin{exercise}  %%V6 Ex9.6
+\label{doubloon}
+
+\index{doubloon}
+
+A word is said to be a ``doubloon'' if every letter that appears in the word appears exactly twice.
+Here are some example doubloons found in the dictionary:
+
+\begin{quote}
+Abba, Anna, appall, appearer, appeases, arraigning, beriberi, bilabial, boob, Caucasus, coco, Dada, deed, Emmett, Hannah, horseshoer, intestines, Isis, mama, Mimi, murmur, noon, Otto, papa, peep, reappear, redder, sees, Shanghaiings, Toto
+\end{quote}
+
+Write a method called \java{isDoubloon} that takes a string and checks whether it is a doubloon.
+To ignore case, invoke the \java{toLowerCase} method before checking.
+\end{exercise}
+
+
+\begin{exercise}  %%V6 Ex9.8
+
+\index{Scrabble}
+
+In Scrabble\footnote{Scrabble is a registered trademark owned in the USA and Canada by Hasbro Inc., and in the rest of the world by J.\ W.\ Spear \& Sons Limited of Maidenhead, Berkshire, England, a subsidiary of Mattel Inc.} each player has a set of tiles with letters on them.
+The object of the game is to use those letters to spell words.
+The scoring system is complex, but longer words are usually worth more than shorter words.
+
+% Full credit to Marc Loy for getting this reference.
+
+Imagine you are given your set of tiles as a string, like \java{"quijibo"}, and you are given another string to test, like \java{"jib"}.
+
+Write a method called \java{canSpell} that takes two strings and checks whether the set of tiles can spell the word.
+You might have more than one tile with the same letter, but you can use each tile only once.
+
+\end{exercise}
