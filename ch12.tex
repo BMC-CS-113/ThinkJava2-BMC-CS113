@@ -486,13 +486,13 @@ System.out.println(Arrays.toString(cards))
 \end{code}
 
 
-\section{Sequential Search}
+\section{Linear Search}
 
-\index{sequential search}
+\index{linear search}
 
 The next method we'll write is \java{search}, which takes an array of cards and a \java{Card} object as parameters.
 It returns the index where the \java{Card} appears in the array, or \java{-1} if it doesn't.
-This version of \java{search} uses the algorithm in Section~\ref{traversal}, which is called {\bf sequential search}:
+This version of \java{search} uses the algorithm in Section~\ref{traversal}, which is called {\bf linear search}:
 
 \index{traversal}
 \index{loop!search}
@@ -516,13 +516,15 @@ If we get to the end of the loop, we know the card is not in the array.
 
 \index{efficiency}
 
-If the cards in the array are not in order, there is no way to search faster than sequential search.
+If the cards in the array are not in order, there is no way to search faster than linear search.
 We have to look at every card, because otherwise we can't be certain the card we want is not there.
-But if the cards are in order, we can use better algorithms.
+We call this algorithm linear search since the number of spots in the array we need to look at \textit{increases linearly} as the size of the array increases. In other words, if the array has a length of \textit{n}, then in the worst case scenario we will have to look at all \textit{n} spots in the array (this worst case scenario is when the element we are searching for is not in the array). 
+In turn, we refer to the run-time of linear search as \textit{O(n)} (pronounced as Big-Oh of n). The Big-Oh notation is a common way in Computer Science to indicate how long an algorithm will take to run in the worst case scenario.
 
-Sequential search is relatively inefficient, especially for large arrays.
+But if the cards are in order, we can use better algorithms.
+Linear search is relatively inefficient, especially for large arrays.
 If you pay the price to keep the array sorted, finding elements becomes much easier.
-%We will learn in the next chapter how to sort arrays.
+We will learn in the next chapter how to sort arrays.
 
 
 \section{Binary Search}
@@ -547,7 +549,7 @@ If you find it, stop.
 
 \end{enumerate}
 
-This algorithm is much faster than sequential search, because it rules out half of the remaining words each time you make a comparison.
+This algorithm is much faster than linear search, because it rules out half of the remaining words each time you make a comparison.
 If at any point you find two adjacent words on the page, and your word comes between them, you can conclude that your word is not in the dictionary.
 
 Getting back to the array of cards, we can write a faster version of \java{search} if we know the cards are in order:
@@ -646,11 +648,10 @@ Each time through the loop, we cut the distance between \java{low} and \java{hig
 After $k$ iterations, the number of remaining cards is $52 / 2^k$.
 To find the number of iterations it takes to complete, we set $52 / 2^k = 1$ and solve for $k$.
 The result is $\log_2 52$, which is about 5.7.
-So we might have to look at 5 or 6 cards, as opposed to all 52 if we did a sequential search.
+So we might have to look at 5 or 6 cards, as opposed to all 52 if we did a linear search.
 
-More generally, if the array contains $n$ elements, binary search requires $\log_2 n$ comparisons, and sequential search requires $n$.
+More generally, if the array contains $n$ elements, binary search requires $\log_2 n$ comparisons, and linear search requires $n$. In turn, the run-time of binary search is \textit{O($\log_2 n$)}
 For large values of $n$, binary search is substantially faster.
-
 
 \section{Vocabulary}
 
@@ -663,7 +664,7 @@ To represent one set of values using another set of values by constructing a map
 A variable declared within a class as \java{static}.
 There is only one copy of a class variable, no matter how many objects there are.
 
-\term{sequential search}
+\term{linear search}
 An algorithm that searches array elements, one by one, until a target value is found.
 
 \term{binary search}

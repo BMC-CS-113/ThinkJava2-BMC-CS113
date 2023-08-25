@@ -153,27 +153,27 @@ When you invoke \java{toUpperCase} on a string, you get a new \java{String} obje
 For example:
 
 \begin{code}
-String name = "Alan Turing";
+String name = "Karen Sparck Jones";
 String upperName = name.toUpperCase();
 \end{code}
 
 %\index{Turing, Alan}
 
-After these statements run, \java{upperName} refers to the string \java{"ALAN TURING"}.
-But \java{name} still refers to \java{"Alan Turing"}.
+After these statements run, \java{upperName} refers to the string \java{"KAREN SPKARCK JONES"}.
+But \java{name} still refers to \java{"Karen Sparck Jones"}.\footnote{Karen Sparck Jones developed the algorithm that powers most search enginers \url{https://www.nytimes.com/2019/01/02/obituaries/karen-sparck-jones-overlooked.html}.}
 A common mistake is to assume that \java{toUpperCase} somehow affects the original string:
 
 \begin{code}
-String name = "Alan Turing";
+String name = "Karen Sparck Jones";
 name.toUpperCase();           // ignores the return value
 System.out.println(name);
 \end{code}
 
-The previous code displays \java{"Alan Turing"}, because the value of \java{name}, which refers to the original \java{String} object, never changes.
+The previous code displays \java{"Karen Sparck Jones"}, because the value of \java{name}, which refers to the original \java{String} object, never changes.
 If you want to change \java{name} to be uppercase, then you need to assign the return value:
 
 \begin{code}
-String name = "Alan Turing";
+String name = "Karen Sparck Jones";
 name = name.toUpperCase();    // references the new string
 System.out.println(name);
 \end{code}
